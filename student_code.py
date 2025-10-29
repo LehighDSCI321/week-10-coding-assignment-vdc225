@@ -384,7 +384,7 @@ class TraversableDigraph(SortableDigraph):
         while queue:
             current_node = queue.popleft()
             if first_node:
-                first = False
+                first_node = False
             else:
                 yield current_node
             for v in self.successors(current_node):
