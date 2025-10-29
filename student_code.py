@@ -440,7 +440,7 @@ class DAG(TraversableDigraph):
             raise ValueError(f"Edge with name '{edge_name}' already exists from node \
             '{start_node_id}'")
         # check for cycles
-        for node in self.dfs(end_node_id):
+        for node in self.bfs(end_node_id):
             if node == start_node_id:
                 raise ValueError("Cannot add a cycle to the DAG")
         # add edge
