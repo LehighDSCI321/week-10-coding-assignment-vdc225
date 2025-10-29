@@ -379,7 +379,7 @@ class TraversableDigraph(SortableDigraph):
         """
         visited = set()
         queue = deque([start_node])
-        visited.add(start_node)
+        #visited.add(start_node)
         while queue:
             current_node = queue.popleft()
             yield current_node
