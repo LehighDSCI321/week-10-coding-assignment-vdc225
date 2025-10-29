@@ -1,9 +1,10 @@
-from collections import deque
 """
 This module contains a class for creating sortable digraphs from our versatile digraph objects
 
 Outlines a method for applying topological sort to the graph
 """
+from collections import deque
+
 class VersatileDigraph:
     """
     A class for making directed graphs made of nodes and edges
@@ -412,28 +413,25 @@ class DAG(TransversibleDigraph):
         edge_weight = kwargs.get('edge_weight', None)
 
         # checks for valid inputs
-        check1 = isinstance(start_node_id, str)
-        check2 = isinstance(end_node_id, str)
-        if not (check1 and check2):
+        if not all(isinstance(n, str) for n in (start_node_id, end_node_id)):
             raise TypeError("start_node_id and end_node_id must be strings.")
+
         if edge_name is not None and not isinstance(edge_name, str):
             raise TypeError("edge_name must be a string.")
+
         if edge_weight is not None:
-            if not isinstance(edge_weight, (int, float)):
-                   raise TypeError("edge_weight must be a number.")
-            if edge_weight <= 0:
-                raise ValueError("edge_weight must be positive")
-        if start_node_value is not None and not isinstance(start_node_value, (int, float)):
-            raise TypeError("start_node_value must be a number.")
-        if end_node_value is not None:
-            check6 = isinstance(end_node_value, (int, float))
-            if not check6:
-                raise TypeError("end_node_value must be a number.")
+            if not isinstance(edge_weight, (int, float)) or edge_weight <= 0:
+                raise ValueError("edge_weight must be a positive number.")
+
+        for name, value in (("start_node_value", start_node_value),
+                    ("end_node_value", end_node_value)):
+            if value is not None and not isinstance(value, (int, float)):
+                raise TypeError(f"{name} must be a number.")
         # ensure node exists
-        if start_node_id not in self.nodes:
-            self.add_node(start_node_id, start_node_value)
-        if end_node_id not in self.nodes:
-            self.add_node(end_node_id, end_node_value)
+        for node_id, node_value in ((start_node_id, start_node_value),
+                            (end_node_id, end_node_value)):
+            if node_id not in self.nodes:
+                self.add_node(node_id, node_value)
         # ensure start_node_id is in self.edges
         if start_node_id not in self.edges:
             self.edges[start_node_id] = {}
