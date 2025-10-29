@@ -363,12 +363,12 @@ class TraversableDigraph(SortableDigraph):
         first_node = True
         while stack:
             current_node = stack.pop()
-            if first_node:
-                first_node = False
-            else:
-                yield current_node
             if current_node not in visited:
                 visited.add(current_node)
+                if first_node:
+                    first_node = False
+                else:
+                    yield current_node
                 neighbors = self.successors(current_node)
                 stack.extend(reversed(neighbors))
 
