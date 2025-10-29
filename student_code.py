@@ -394,59 +394,58 @@ class DAG(TransversibleDigraph):
 
     Creates directed acyclical graphs that redefine the add_edge method
     """
-        def add_edge(self, start_node_id, end_node_id, **kwargs):
-        """
-        Overrides the function for adding an edge to DAGs
+    def add_edge(self, start_node_id, end_node_id, **kwargs):
+    """
+    Overrides the function for adding an edge to DAGs
 
-        Attributes:
-            self: the object
-            start_node_id: starting node of the edge
-            end_node_id: ending node of the edge
-            end_node_value: value of the end node
-            edge_name: identifier for the edge
-            edge_weight: weight affiliated with the edge
-        """
-        # extract values from kwargs with defaults
-        start_node_value = kwargs.get('start_node_value', None)
-        end_node_value = kwargs.get('end_node_value', None)
-        edge_name = kwargs.get('edge_name', None)
-        edge_weight = kwargs.get('edge_weight', None)
+    Attributes:
+        self: the object
+        start_node_id: starting node of the edge
+        end_node_id: ending node of the edge
+        end_node_value: value of the end node
+        edge_name: identifier for the edge
+        edge_weight: weight affiliated with the edge
+    """
+    # extract values from kwargs with defaults
+    start_node_value = kwargs.get('start_node_value', None)
+    end_node_value = kwargs.get('end_node_value', None)
+    edge_name = kwargs.get('edge_name', None)
+    edge_weight = kwargs.get('edge_weight', None)
 
-        # checks for valid inputs
-        check1 = isinstance(start_node_id, str)
-        check2 = isinstance(end_node_id, str)
-        if not (check1 and check2):
-            raise TypeError("start_node_id and end_node_id must be strings.")
-
-        if edge_name is not None and not isinstance(edge_name, str):
-            raise TypeError("edge_name must be a string.")
-        if edge_weight is not None:
-            if not isinstance(edge_weight, (int, float)):
-                raise TypeError("edge_weight must be a number.")
-            if edge_weight <= 0:
-                raise ValueError("edge_weight must be positive")
-        if start_node_value is not None and not isinstance(start_node_value, (int, float)):
-            raise TypeError("start_node_value must be a number.")
-        if end_node_value is not None:
-            check6 = isinstance(end_node_value, (int, float))
-            if not check6:
-                raise TypeError("end_node_value must be a number.")
-        # ensure node exists
-        if start_node_id not in self.nodes:
-            self.add_node(start_node_id, start_node_value)
-        if end_node_id not in self.nodes:
-            self.add_node(end_node_id, end_node_value)
-        # ensure start_node_id is in self.edges
-        if start_node_id not in self.edges:
-            self.edges[start_node_id] = {}
-        # ensure edge_name is unique
-        if edge_name is not None and edge_name in self.edges[start_node_id]:
-            raise ValueError(f"Edge with name '{edge_name}' already exists from node \
-            '{start_node_id}'")
-        # check for cycles
-        for node in self.dfs(end_node_id):
-            if node == start_node_id:
-                raise ValueError("Cannot add a cycle to the DAG")
-        # add edge
-        self.edges[start_node_id][edge_name] = {'end_node_id': end_node_id, \
-                                                'edge_weight': edge_weight}
+    # checks for valid inputs
+    check1 = isinstance(start_node_id, str)
+    check2 = isinstance(end_node_id, str)
+    if not (check1 and check2):
+        raise TypeError("start_node_id and end_node_id must be strings.")
+    if edge_name is not None and not isinstance(edge_name, str):
+        raise TypeError("edge_name must be a string.")
+    if edge_weight is not None:
+        if not isinstance(edge_weight, (int, float)):
+               raise TypeError("edge_weight must be a number.")
+        if edge_weight <= 0:
+            raise ValueError("edge_weight must be positive")
+    if start_node_value is not None and not isinstance(start_node_value, (int, float)):
+        raise TypeError("start_node_value must be a number.")
+    if end_node_value is not None:
+        check6 = isinstance(end_node_value, (int, float))
+        if not check6:
+            raise TypeError("end_node_value must be a number.")
+    # ensure node exists
+    if start_node_id not in self.nodes:
+        self.add_node(start_node_id, start_node_value)
+    if end_node_id not in self.nodes:
+        self.add_node(end_node_id, end_node_value)
+    # ensure start_node_id is in self.edges
+    if start_node_id not in self.edges:
+        self.edges[start_node_id] = {}
+    # ensure edge_name is unique
+    if edge_name is not None and edge_name in self.edges[start_node_id]:
+        raise ValueError(f"Edge with name '{edge_name}' already exists from node \
+        '{start_node_id}'")
+    # check for cycles
+    for node in self.dfs(end_node_id):
+        if node == start_node_id:
+            raise ValueError("Cannot add a cycle to the DAG")
+    # add edge
+    self.edges[start_node_id][edge_name] = {'end_node_id': end_node_id, \
+                                            'edge_weight': edge_weight}
