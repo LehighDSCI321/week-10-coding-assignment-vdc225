@@ -366,8 +366,7 @@ class TransversibleDigraph(SortableDigraph):
                 visited.add(current_node)
                 yield current_node
                 neighbors = self.successors(current_node)
-                stack.extend(reversed(neighbors))
-            
+                stack.extend(reversed(neighbors))    
 
     def bfs(self, start_node):
         """
