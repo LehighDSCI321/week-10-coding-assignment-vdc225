@@ -74,7 +74,8 @@ class VersatileDigraph:
         if edge_name is None:
             edge_name = f"edge_{len(self.edges[start_node_id])}"
         elif edge_name in self.edges[start_node_id]:
-            raise ValueError(f"Edge with name '{edge_name}' already exists from node '{start_node_id}'")
+            raise ValueError(f"Edge with name '{edge_name}\
+            ' already exists from node '{start_node_id}'")
         # add edge
         self.edges[start_node_id][edge_name] = {'end_node_id': end_node_id, \
                                                 'edge_weight': edge_weight}
@@ -441,7 +442,8 @@ class DAG(TraversableDigraph):
         if edge_name is None:
             edge_name = f"edge_{len(self.edges[start_node_id])}"
         elif edge_name in self.edges[start_node_id]:
-            raise ValueError(f"Edge with name '{edge_name}' already exists from node '{start_node_id}'")
+            raise ValueError(f"Edge with name '{edge_name}\
+            ' already exists from node '{start_node_id}'")
         # check for cycles
         if end_node_id in self.nodes:
             for node in self.dfs(end_node_id):
