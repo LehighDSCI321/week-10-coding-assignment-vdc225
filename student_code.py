@@ -345,7 +345,7 @@ class SortableDigraph(VersatileDigraph):
                     que.append(v)
         return es
 
-class TraversibleDigraph(SortableDigraph):
+class TraversableDigraph(SortableDigraph):
     """
     A child class for making transversible graphs made of nodes and edges
 
@@ -367,7 +367,7 @@ class TraversibleDigraph(SortableDigraph):
                 visited.add(current_node)
                 yield current_node
                 neighbors = self.successors(current_node)
-                stack.extend(reversed(neighbors))    
+                stack.extend(reversed(neighbors))
 
     def bfs(self, start_node):
         """
@@ -388,7 +388,7 @@ class TraversibleDigraph(SortableDigraph):
                     visited.add(v)
                     queue.append(v)
 
-class DAG(TraversibleDigraph):
+class DAG(TraversableDigraph):
     """
     A child class for making DAGs made of nodes and edges
 
