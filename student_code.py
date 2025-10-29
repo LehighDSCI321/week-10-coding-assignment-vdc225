@@ -345,7 +345,7 @@ class SortableDigraph(VersatileDigraph):
                     que.append(v)
         return es
 
-class TransversibleDigraph(SortableDigraph):
+class TraversibleDigraph(SortableDigraph):
     """
     A child class for making transversible graphs made of nodes and edges
 
@@ -388,7 +388,7 @@ class TransversibleDigraph(SortableDigraph):
                     visited.add(v)
                     queue.append(v)
 
-class DAG(TransversibleDigraph):
+class DAG(TraversibleDigraph):
     """
     A child class for making DAGs made of nodes and edges
 
