@@ -387,7 +387,7 @@ class TraversableDigraph(SortableDigraph):
                 first_node = False
             else:
                 yield current_node
-            for v in self.successors(current_node):
+            for v in sorted(self.successors(current_node)):
                 if v not in visited:
                     visited.add(v)
                     queue.append(v)
